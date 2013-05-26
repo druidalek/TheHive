@@ -117,74 +117,74 @@ TheHive
 
 Функцијата void WinLevel() се користи за проверка дали е поминато нивото и доколку е се извршуваат соодветните функции.
 
-  private void WinLevel()
-  {
-      // Проверка дали сите ќелии се пополнети
-      if (FilledSlots == SlotCount)
-      {
-          // Се ресетира тајмерот на почетната состојба
-          HintUsed = true;
-          lblHint.Text = "Hint in 0:30";
-          lblHint.ForeColor = Color.FromArgb(255, 150, 0);
-          HintTimeLeft = 30;
-          HintTimer.Start();
-  
-          // Проверка дали било поминато последното ниво
-          if (level + 1 == Constants.LevelMatrices.Count)
-          {
-              // Нема веќе нивоа за играње. Формата се затвора
-              won = true;
-              DialogResult dr = MessageBox.Show("Congratulations, you passed all levels!");
-              DialogResult = DialogResult.No;
-              Close();
-          }
-          else
-          {
-              // Поминато е моменталното ниво, го иницијализираме следното.
-  
-              // Се покажува текст дека сме го поминале нивото
-              lblLevelPassed.Text = "Level " + (level + 1) + " passed!";
-              lblLevelPassed.Visible = true;
-  
-              // Иницијализација на новото ниво
-              won = false;
-              InitializeLevel(++level);
-              Invalidate(true);
-  
-              // По 2.5 секунди текстот за поминато ниво се крие
-              Timer timer = new Timer();
-              timer.Interval = 2500;
-              timer.Tick += (arg1, arg2) =>
-              {
-                  lblLevelPassed.Visible = false;
-                  timer.Stop();
-                  timer.Dispose();
-              };
-  
-              timer.Start();
-          }
-      }
-  }
+    private void WinLevel()
+    {
+        // Проверка дали сите ќелии се пополнети
+        if (FilledSlots == SlotCount)
+        {
+            // Се ресетира тајмерот на почетната состојба
+            HintUsed = true;
+            lblHint.Text = "Hint in 0:30";
+            lblHint.ForeColor = Color.FromArgb(255, 150, 0);
+            HintTimeLeft = 30;
+            HintTimer.Start();
+    
+            // Проверка дали било поминато последното ниво
+            if (level + 1 == Constants.LevelMatrices.Count)
+            {
+                // Нема веќе нивоа за играње. Формата се затвора
+                won = true;
+                DialogResult dr = MessageBox.Show("Congratulations, you passed all levels!");
+                DialogResult = DialogResult.No;
+                Close();
+            }
+            else
+            {
+                // Поминато е моменталното ниво, го иницијализираме следното.
+    
+                // Се покажува текст дека сме го поминале нивото
+                lblLevelPassed.Text = "Level " + (level + 1) + " passed!";
+                lblLevelPassed.Visible = true;
+    
+                // Иницијализација на новото ниво
+                won = false;
+                InitializeLevel(++level);
+                Invalidate(true);
+    
+                // По 2.5 секунди текстот за поминато ниво се крие
+                Timer timer = new Timer();
+                timer.Interval = 2500;
+                timer.Tick += (arg1, arg2) =>
+                {
+                    lblLevelPassed.Visible = false;
+                    timer.Stop();
+                    timer.Dispose();
+                };
+    
+                timer.Start();
+            }
+        }
+    }
 
 Функцијата void DropBee(int i, int j) користи за поставување на селектирана пчела во некоја од ќелиите.
 
-  public void DropBee(int i, int j)
-  {
-      // Курсорот се поставува на default курсор.
-      Cursor = Cursors.Default;
-  
-      // Селектираната пчела ја означуваме дека е поставена во ќелија.
-      // Зачувуваме во кој чекор е поставена пчелата
-      // Ги зачувуваме координатите на ќелијата.
-      Bees[SelectedBeeIndex].Dropped = true;
-      Bees[SelectedBeeIndex].DropTimer = DropTimer++;
-      Bees[SelectedBeeIndex].DropCoordinates = new Point(i, j);
-  
-      // Означуваме дека веќе нема селектирана пчела.
-      SelectedBeeIndex = -1;
-  
-      // Одново се повикува BeeEvent за секоја пчела која има Dropped = true, во растечки редослед во однос на нивниот DropTimer.
-      ExecuteBeeEvents();
-  }
+    public void DropBee(int i, int j)
+    {
+        // Курсорот се поставува на default курсор.
+        Cursor = Cursors.Default;
+    
+        // Селектираната пчела ја означуваме дека е поставена во ќелија.
+        // Зачувуваме во кој чекор е поставена пчелата
+        // Ги зачувуваме координатите на ќелијата.
+        Bees[SelectedBeeIndex].Dropped = true;
+        Bees[SelectedBeeIndex].DropTimer = DropTimer++;
+        Bees[SelectedBeeIndex].DropCoordinates = new Point(i, j);
+    
+        // Означуваме дека веќе нема селектирана пчела.
+        SelectedBeeIndex = -1;
+    
+        // Одново се повикува BeeEvent за секоја пчела која има Dropped = true, во растечки редослед во однос на нивниот DropTimer.
+        ExecuteBeeEvents();
+    }
 
 
